@@ -43,7 +43,7 @@ int main() {
     clock_t startTime, endTime;
     
     //读取图片
-    srcImage = imread("C:/Users/a/Desktop/center.jpg");
+    srcImage = imread("C:/Users/a/Desktop/photo2.jpg");
 
     //转化为灰度图
     cvtColor(srcImage, grayImage, COLOR_RGB2GRAY);
@@ -57,7 +57,7 @@ int main() {
     //imshow("binaryImage", binaryImage);
     //waitKey(0);
     startTime = clock();//计时开始
-    adaptiveThreshold(grayImage, binaryImage, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 39, 15);
+    adaptiveThreshold(grayImage, binaryImage, 255, ADAPTIVE_THRESH_MEAN_C, THRESH_BINARY_INV, 41, 17);
 
     endTime = clock();//计时结束
     cout << "The run time is: " << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
