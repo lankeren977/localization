@@ -30,13 +30,16 @@
     <ClCompile Include="all.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="frame.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="continueTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="checkthree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="fast.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="latest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

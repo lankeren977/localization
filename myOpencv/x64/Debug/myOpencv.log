@@ -1,22 +1,87 @@
 ﻿  main.cpp
-D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(34,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(26,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
           with
           [
               _Tp=float
           ]
-D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(35,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(27,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
           with
           [
               _Tp=float
           ]
-D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(36,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(28,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
           with
           [
               _Tp=float
           ]
-D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(37,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(29,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
           with
           [
               _Tp=float
           ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(219,45): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(242,47): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(246,48): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(246,36): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(247,50): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(247,37): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(248,54): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(248,39): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(256,40): warning C4305: “-=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(258,40): warning C4305: “+=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(265,41): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(286,29): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(288,39): warning C4305: “-=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(290,39): warning C4305: “+=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(291,39): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(311,52): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(341,46): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
   myOpencv.vcxproj -> D:\zhangqr\projects\myOpencv\x64\Debug\myOpencv.exe

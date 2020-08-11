@@ -147,7 +147,8 @@
     <ClCompile Include="checkthree.cpp" />
     <ClCompile Include="continueTest.cpp" />
     <ClCompile Include="convert.cpp" />
-    <ClCompile Include="frame.cpp" />
+    <ClCompile Include="fast.cpp" />
+    <ClCompile Include="latest.cpp" />
     <ClCompile Include="identity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="rotation.cpp" />
