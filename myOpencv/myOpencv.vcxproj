@@ -147,7 +147,16 @@
     <ClCompile Include="checkthree.cpp" />
     <ClCompile Include="continueTest.cpp" />
     <ClCompile Include="convert.cpp" />
+    <ClCompile Include="correctThreePoints.cpp" />
     <ClCompile Include="fast.cpp" />
+    <ClCompile Include="getCircles.cpp" />
+    <ClCompile Include="getCoordinateValue.cpp" />
+    <ClCompile Include="getLandmarkId.cpp" />
+    <ClCompile Include="getLandmarkROIs.cpp" />
+    <ClCompile Include="getPointAffinedPos.cpp" />
+    <ClCompile Include="getRotationAngle.cpp" />
+    <ClCompile Include="getTargetRects.cpp" />
+    <ClCompile Include="getThreeFixedPoints.cpp" />
     <ClCompile Include="latest.cpp" />
     <ClCompile Include="identity.cpp" />
     <ClCompile Include="main.cpp" />

@@ -67,7 +67,7 @@ int main() {
         Point cameraCenter(grayImage.cols / 2, grayImage.rows / 2);
 
         //转化二值图像
-        threshold(grayImage, binaryImage, 230, 255, THRESH_BINARY);
+        threshold(grayImage, binaryImage, 220, 255, THRESH_BINARY);
 
         vector<vector<Point>> contours;
         vector<Vec4i> hierarchy;

@@ -42,6 +42,33 @@
     <ClCompile Include="latest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="getLandmarkROIs.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getTargetRects.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getCircles.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getThreeFixedPoints.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="correctThreePoints.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getCoordinateValue.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getLandmarkId.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getPointAffinedPos.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="getRotationAngle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rotation.h">
