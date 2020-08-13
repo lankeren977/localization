@@ -7,6 +7,6 @@
 using namespace std;
 using namespace cv;
 
-vector<Rect> getLandmarkROIs(vector<Rect> targetRects, int minDisValue, int maxDisValue, int fixedPointsNum);
+vector<Rect> getLandmarkRois(vector<Rect> targetRects, int minDisValue, int maxDisValue, int fixedPointsNum);
 
 #endif

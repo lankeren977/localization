@@ -10,16 +10,16 @@ int getLandmarkId(vector<Vec3f> circles, vector<Vec3f> points) {
     int id = 0;
 
     //x和y轴分量计算
-    double dx = (RightTop[0] - LeftTop[0]) / (n - 1);
-    double dy = (LeftBottom[1] - LeftTop[1]) / (n - 1);
+    double dx = (RightTop[0] - LeftTop[0]) / (landmark_dim - 1);
+    double dy = (LeftBottom[1] - LeftTop[1]) / (landmark_dim - 1);
 
     //按位检测圆是否存在
     int seq = 0;
     int circlesNum = circles.size() - fixednum;
     int bitNum = 0;
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            if ((i == 1 && j == 1) || (i == 1 && j == n) || (i == n && j == 1) || (i == n && j == n)) {
+    for (int i = 1; i <= landmark_dim; i++) {
+        for (int j = 1; j <= landmark_dim; j++) {
+            if ((i == 1 && j == 1) || (i == 1 && j == landmark_dim) || (i == landmark_dim && j == 1) || (i == landmark_dim && j == landmark_dim)) {
                 continue;
             }
             double bitx = LeftTop[0] + (j - 1) * dx;

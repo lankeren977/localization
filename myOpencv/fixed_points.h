@@ -7,6 +7,6 @@
 using namespace std;
 using namespace cv;
 
-vector<Vec3f> getThreeFixedPoints(vector<Vec3f> circles, int minSideLength, int maxSideLength);
+vector<Vec3f> getThreeFixedPoints(vector<Vec3f> circles, double minSideLength, double maxSideLength);
 
 #endif

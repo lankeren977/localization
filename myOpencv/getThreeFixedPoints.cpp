@@ -1,6 +1,6 @@
 #include "fixed_points.h"
 
-vector<Vec3f> getThreeFixedPoints(vector<Vec3f> circles, int minSideLength, int maxSideLength) {
+vector<Vec3f> getThreeFixedPoints(vector<Vec3f> circles, double minSideLength, double maxSideLength) {
 
     vector<Vec3f> fixedPoints;
     Vec3f LeftTop;

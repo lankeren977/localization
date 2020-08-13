@@ -144,7 +144,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="all.cpp" />
-    <ClCompile Include="continueTest.cpp" />
     <ClCompile Include="correctThreePoints.cpp" />
     <ClCompile Include="getAbsoluteCircles.cpp" />
     <ClCompile Include="getCoordinateValue.cpp" />

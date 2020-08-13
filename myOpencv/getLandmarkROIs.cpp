@@ -1,6 +1,6 @@
 #include "landmark_rois.h"
 
-vector<Rect> getLandmarkROIs(vector<Rect> targetRects, int minDisValue, int maxDisValue, int fixedPointsNum) {
+vector<Rect> getLandmarkRois(vector<Rect> targetRects, int minDisValue, int maxDisValue, int fixedPointsNum) {
 
     vector<Rect> targetROIs;//定义LandmarkROI集合
     vector<vector<Rect>> ROIs;//定义ROI集合
@@ -60,4 +60,5 @@ vector<Rect> getLandmarkROIs(vector<Rect> targetRects, int minDisValue, int maxD
             targetROIs.push_back(roiRect);
         }
         return targetROIs;
+    }
 }
