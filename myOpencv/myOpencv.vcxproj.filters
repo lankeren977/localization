@@ -15,15 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="convert.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="identity.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="rotation.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -33,12 +24,6 @@
     <ClCompile Include="continueTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="checkthree.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="fast.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="latest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -46,9 +31,6 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="getTargetRects.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="getCircles.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="getThreeFixedPoints.cpp">
@@ -69,9 +51,36 @@
     <ClCompile Include="getRotationAngle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="getAbsoluteCircles.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="rotation.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="target_rects.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="landmark_rois.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="absolute_circles.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="fixed_points.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="correct_fixed_points.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="coordinate_value.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="pos_affine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="identify.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

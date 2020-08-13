@@ -1,4 +1,83 @@
-﻿  main.cpp
+﻿  getCoordinateValue.cpp
+D:\zhangqr\projects\myOpencv\myOpencv\getCoordinateValue.cpp(17,28): warning C4305: “-=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\getCoordinateValue.cpp(19,28): warning C4305: “+=”: 从“double”到“float”截断
+  getLandmarkId.cpp
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(3,41): error C2059: 语法错误:“,”
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(10,18): error C2065: “RightTop”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(10,32): error C2065: “LeftTop”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(11,18): error C2065: “LeftBottom”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(11,34): error C2065: “LeftTop”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(15,40): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(22,27): error C2065: “LeftTop”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(23,27): error C2065: “LeftTop”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(24,13): error C2065: “bits”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(27,21): error C2065: “bits”: 未声明的标识符
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkId.cpp(45,15): error C2065: “bits”: 未声明的标识符
+  getLandmarkROIs.cpp
+D:\zhangqr\projects\myOpencv\myOpencv\getLandmarkROIs.cpp(3): fatal error C1075: “{”: 未找到匹配令牌
+  getPointAffinedPos.cpp
+D:\zhangqr\projects\myOpencv\myOpencv\getPointAffinedPos.cpp(5,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getPointAffinedPos.cpp(6,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getPointAffinedPos.cpp(7,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getPointAffinedPos.cpp(8,21): warning C4244: “=”: 从“int”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+  getRotationAngle.cpp
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(9,36): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(9,24): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(10,42): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(10,27): warning C4244: “参数”: 从“_Tp”转换到“_Tp”，可能丢失数据
+          with
+          [
+              _Tp=float
+          ]
+          and
+          [
+              _Tp=int
+          ]
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(16,17): warning C4244: “初始化”: 从“double”转换到“float”，可能丢失数据
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(18,27): warning C4305: “-=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(20,27): warning C4305: “+=”: 从“double”到“float”截断
+D:\zhangqr\projects\myOpencv\myOpencv\getRotationAngle.cpp(21,27): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
+  main.cpp
 D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(26,11): warning C4244: “初始化”: 从“_Tp”转换到“int”，可能丢失数据
           with
           [
@@ -84,4 +163,5 @@ D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(290,39): warning C4305: “+=”:
 D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(291,39): warning C4244: “=”: 从“double”转换到“float”，可能丢失数据
 D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(311,52): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
 D:\zhangqr\projects\myOpencv\myOpencv\main.cpp(341,46): warning C4244: “+=”: 从“double”转换到“int”，可能丢失数据
-  myOpencv.vcxproj -> D:\zhangqr\projects\myOpencv\x64\Debug\myOpencv.exe
+  正在生成代码...
+D:\zhangqr\projects\myOpencv\myOpencv\getCoordinateValue.cpp(42): warning C4172: 返回局部变量或临时变量的地址: coordinate_value

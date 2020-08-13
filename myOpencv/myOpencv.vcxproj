@@ -144,12 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="all.cpp" />
-    <ClCompile Include="checkthree.cpp" />
     <ClCompile Include="continueTest.cpp" />
-    <ClCompile Include="convert.cpp" />
     <ClCompile Include="correctThreePoints.cpp" />
-    <ClCompile Include="fast.cpp" />
-    <ClCompile Include="getCircles.cpp" />
+    <ClCompile Include="getAbsoluteCircles.cpp" />
     <ClCompile Include="getCoordinateValue.cpp" />
     <ClCompile Include="getLandmarkId.cpp" />
     <ClCompile Include="getLandmarkROIs.cpp" />
@@ -158,12 +155,18 @@
     <ClCompile Include="getTargetRects.cpp" />
     <ClCompile Include="getThreeFixedPoints.cpp" />
     <ClCompile Include="latest.cpp" />
-    <ClCompile Include="identity.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="rotation.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="absolute_circles.h" />
+    <ClInclude Include="coordinate_value.h" />
+    <ClInclude Include="correct_fixed_points.h" />
+    <ClInclude Include="fixed_points.h" />
+    <ClInclude Include="identify.h" />
+    <ClInclude Include="landmark_rois.h" />
+    <ClInclude Include="pos_affine.h" />
     <ClInclude Include="rotation.h" />
+    <ClInclude Include="target_rects.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
