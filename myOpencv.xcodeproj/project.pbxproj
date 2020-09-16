@@ -56,7 +56,14 @@
 		7B6AAD902452C5790069BDD9 /* libopencv_core.4.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6AAD5F2452C5790069BDD9 /* libopencv_core.4.2.0.dylib */; };
 		7B6AAD912452C5790069BDD9 /* libopencv_ximgproc.4.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6AAD602452C5790069BDD9 /* libopencv_ximgproc.4.2.0.dylib */; };
 		7B6AAD922452C5790069BDD9 /* libopencv_dnn.4.2.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6AAD612452C5790069BDD9 /* libopencv_dnn.4.2.0.dylib */; };
-		7B87EAE824E2843C00F87308 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AAD292452C2D40069BDD9 /* main.cpp */; };
+		7BADE7B5250DFBE1003D2B7B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7B6AAD292452C2D40069BDD9 /* main.cpp */; };
+		7BADE7B6250E0154003D2B7B /* loadConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B2250B1916003D2B7B /* loadConfig.cpp */; };
+		7BADE7BA250E23FD003D2B7B /* visualLocalize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B8250E23FD003D2B7B /* visualLocalize.cpp */; };
+		7BADE7BC250E24DE003D2B7B /* LocalizeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7BB250E24DE003D2B7B /* LocalizeData.cpp */; };
+		7BADE7BE250E3326003D2B7B /* loadConfig.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B3250B1916003D2B7B /* loadConfig.h */; };
+		7BADE7BF250E3326003D2B7B /* visualLocalize.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B9250E23FD003D2B7B /* visualLocalize.h */; };
+		7BADE7C0250E3326003D2B7B /* LocalizeData.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7BD250E2FFC003D2B7B /* LocalizeData.h */; };
+		7BADE7C32510411D003D2B7B /* Landmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7C12510411D003D2B7B /* Landmark.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -72,7 +79,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		7B67CC872467D432000DA668 /* rotation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rotation.cpp; sourceTree = "<group>"; };
 		7B6AAD292452C2D40069BDD9 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		7B6AAD312452C5780069BDD9 /* libopencv_stereo.4.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_stereo.4.2.0.dylib; path = ../../../../../usr/local/Cellar/opencv/4.2.0_3/lib/libopencv_stereo.4.2.0.dylib; sourceTree = "<group>"; };
 		7B6AAD322452C5780069BDD9 /* libopencv_aruco.4.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_aruco.4.2.0.dylib; path = ../../../../../usr/local/Cellar/opencv/4.2.0_3/lib/libopencv_aruco.4.2.0.dylib; sourceTree = "<group>"; };
@@ -123,10 +129,15 @@
 		7B6AAD5F2452C5790069BDD9 /* libopencv_core.4.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.4.2.0.dylib; path = ../../../../../usr/local/Cellar/opencv/4.2.0_3/lib/libopencv_core.4.2.0.dylib; sourceTree = "<group>"; };
 		7B6AAD602452C5790069BDD9 /* libopencv_ximgproc.4.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_ximgproc.4.2.0.dylib; path = ../../../../../usr/local/Cellar/opencv/4.2.0_3/lib/libopencv_ximgproc.4.2.0.dylib; sourceTree = "<group>"; };
 		7B6AAD612452C5790069BDD9 /* libopencv_dnn.4.2.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_dnn.4.2.0.dylib; path = ../../../../../usr/local/Cellar/opencv/4.2.0_3/lib/libopencv_dnn.4.2.0.dylib; sourceTree = "<group>"; };
-		7B6E9E2E246941D200A13F61 /* trandition_identity.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = trandition_identity.cpp; sourceTree = "<group>"; };
-		7B87EAE624E2832A00F87308 /* lastest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lastest.cpp; sourceTree = "<group>"; };
+		7BADE7B2250B1916003D2B7B /* loadConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = loadConfig.cpp; sourceTree = "<group>"; };
+		7BADE7B3250B1916003D2B7B /* loadConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = loadConfig.h; sourceTree = "<group>"; };
+		7BADE7B8250E23FD003D2B7B /* visualLocalize.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = visualLocalize.cpp; sourceTree = "<group>"; };
+		7BADE7B9250E23FD003D2B7B /* visualLocalize.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = visualLocalize.h; sourceTree = "<group>"; };
+		7BADE7BB250E24DE003D2B7B /* LocalizeData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = LocalizeData.cpp; sourceTree = "<group>"; };
+		7BADE7BD250E2FFC003D2B7B /* LocalizeData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalizeData.h; sourceTree = "<group>"; };
+		7BADE7C12510411D003D2B7B /* Landmark.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Landmark.cpp; sourceTree = "<group>"; };
+		7BADE7C22510411D003D2B7B /* Landmark.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Landmark.h; sourceTree = "<group>"; };
 		7BD0C6F1246A804A00F86053 /* myOpencv */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = myOpencv; sourceTree = BUILT_PRODUCTS_DIR; };
-		7BD0C6F8246BDEA700F86053 /* convert.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = convert.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,10 +213,14 @@
 			isa = PBXGroup;
 			children = (
 				7B6AAD292452C2D40069BDD9 /* main.cpp */,
-				7B67CC872467D432000DA668 /* rotation.cpp */,
-				7B6E9E2E246941D200A13F61 /* trandition_identity.cpp */,
-				7BD0C6F8246BDEA700F86053 /* convert.cpp */,
-				7B87EAE624E2832A00F87308 /* lastest.cpp */,
+				7BADE7B2250B1916003D2B7B /* loadConfig.cpp */,
+				7BADE7B3250B1916003D2B7B /* loadConfig.h */,
+				7BADE7B8250E23FD003D2B7B /* visualLocalize.cpp */,
+				7BADE7B9250E23FD003D2B7B /* visualLocalize.h */,
+				7BADE7BB250E24DE003D2B7B /* LocalizeData.cpp */,
+				7BADE7BD250E2FFC003D2B7B /* LocalizeData.h */,
+				7BADE7C12510411D003D2B7B /* Landmark.cpp */,
+				7BADE7C22510411D003D2B7B /* Landmark.h */,
 			);
 			path = myOpencv;
 			sourceTree = "<group>";
@@ -323,7 +338,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B87EAE824E2843C00F87308 /* main.cpp in Sources */,
+				7BADE7BE250E3326003D2B7B /* loadConfig.h in Sources */,
+				7BADE7BF250E3326003D2B7B /* visualLocalize.h in Sources */,
+				7BADE7C0250E3326003D2B7B /* LocalizeData.h in Sources */,
+				7BADE7BA250E23FD003D2B7B /* visualLocalize.cpp in Sources */,
+				7BADE7B6250E0154003D2B7B /* loadConfig.cpp in Sources */,
+				7BADE7BC250E24DE003D2B7B /* LocalizeData.cpp in Sources */,
+				7BADE7B5250DFBE1003D2B7B /* main.cpp in Sources */,
+				7BADE7C32510411D003D2B7B /* Landmark.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
