@@ -10,8 +10,8 @@ using namespace std;
 extern  map<int,double*> globalLandmarks;
 extern  map<string,double> globalParams;
 
-static string landmarks_path = "/Users/zhangqr/Desktop/landmarks.conf";
-static string params_path = "/Users/zhangqr/Desktop/params.conf";
+static string landmarks_path = "/Users/zhangqr/Desktop/myProject/myOpencv/config/landmarks.conf";
+static string params_path = "/Users/zhangqr/Desktop/myProject/myOpencv/config/params.conf";
 
 void loadConfig();
 

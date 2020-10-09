@@ -62,8 +62,6 @@ Vec3f getPointAffinedPos(Vec3f& src, const Point center, double angle)
 }
 
 LocalizeData getVisualLocalizeData(Mat srcImage){
-    //取配置参数
-    loadVisualParams();
 
     Mat grayImage,binaryImage;
     //转化灰度图
@@ -75,6 +73,8 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     //转化二值图像
     threshold(grayImage, binaryImage, binaryThreshold, binaryMaxValue, THRESH_BINARY);
     
+//    imshow("s",binaryImage);
+//    waitKey(0);
     //寻找轮廓
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
@@ -124,20 +124,20 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 maxY = (rects[j].y > maxY) ? rects[j].y : maxY;
             }
             //避免遗漏尝试扩大边界5像素
-            minX = (minX >= 10) ? minX-10 : minX;
-            minY = (minX >= 10) ? minY-10 : minY;
-            maxX = maxX - minX + 20;
-            maxY = maxY - minY + 20;
+            minX = (minX >= 20) ? minX-20 : minX;
+            minY = (minX >= 20) ? minY-20 : minY;
+            maxX = maxX - minX + 40;
+            maxY = maxY - minY + 40;
             Rect newRect = Rect(minX, minY, maxX, maxY);
             oriROIs.push_back(newRect);
         }
     }
-    
     //在预选ROI中进行霍夫曼圆检测，确定最终参考路标
     vector<Landmark> landmarks;
     
     for(int i = 0; i < oriROIs.size(); i++){
         Mat roiImage = grayImage(oriROIs[i]);
+        rectangle(srcImage, Point(oriROIs[i].x,oriROIs[i].y), Point(oriROIs[i].x+oriROIs[i].width,oriROIs[i].y+oriROIs[i].height),Scalar(255,0,0));
         vector<Vec3f> circles;
         HoughCircles(roiImage, circles, HOUGH_GRADIENT, houghDp, houghMinDist, houghParam1, houghParam2, houghMinRadius, houghMaxRadius);
         
@@ -339,7 +339,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     
     //平均各路标数据
     if(localizeDatas.size() > 0){
-        float v_x = 0, v_y = 0;
+        float v_x = 0, v_y = 0, v_theta = 0;
         int num = 0;
         for(int i = 0; i < localizeDatas.size(); i++){
             map<int,double*>::iterator iter;
@@ -347,15 +347,20 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             if(iter != globalLandmarks.end()){
                 v_x += iter->second[0] + localizeDatas[i].getVisualX();
                 v_y += iter->second[1] + localizeDatas[i].getVisualY();
+                v_theta += localizeDatas[i].getVisualTheta();
                 num++;
             }else{
                 cout << "id:" << localizeDatas[i].getLandmarkId() << " 配置异常" <<endl;
             }
         }
-        v_x /= num;
-        v_y /= num;
+        if(num!=0){
+            v_x /= num;
+            v_y /= num;
+            v_theta /= num;
+        }
         LocalizeData final_data;
         final_data.setLandmarkId(1);
+        final_data.setVisualTheta(v_theta);
         final_data.setVisualX(v_x);
         final_data.setVisualY(v_y);
         return final_data;
