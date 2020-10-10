@@ -73,8 +73,6 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     //转化二值图像
     threshold(grayImage, binaryImage, binaryThreshold, binaryMaxValue, THRESH_BINARY);
     
-//    imshow("s",binaryImage);
-//    waitKey(0);
     //寻找轮廓
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
@@ -87,6 +85,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
         boundRect[i] = boundingRect(Mat(contours[i]));
         if (boundRect[i].width < targetRectMax && boundRect[i].width > targetRectMin && boundRect[i].height < targetRectMax && boundRect[i].height > targetRectMin) { //圆形外界矩阵长宽限制一致
             targetRects.push_back(boundRect[i]);
+            rectangle(srcImage, Point(boundRect[i].x,boundRect[i].y), Point(boundRect[i].x+boundRect[i].width,boundRect[i].y+boundRect[i].height),Scalar(0,255,0));
         }
     }
 
@@ -110,6 +109,99 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
         }
     }
     
+    //在各堆矩阵中找出圆心
+    vector<vector<Vec3f>> all_circles;
+    if (rectStacks.size() > 0) {
+        for (int i = 0; i < rectStacks.size(); i++) {
+            vector<Vec3f> temp_circles;
+            vector<Rect> tempRectStacks = rectStacks[i];
+            for(int j = 0; j < tempRectStacks.size(); j++){
+                float c_x = tempRectStacks[j].x + (tempRectStacks[j].width / 2);
+                float c_y = tempRectStacks[j].y + (tempRectStacks[j].height / 2);
+                float c_r = (tempRectStacks[j].width + tempRectStacks[j].height) / 2;
+                Vec3f circle = Vec3f(c_x,c_y,c_r);
+                temp_circles.push_back(circle);
+                cv::circle(srcImage, Point(c_x,c_y), 2, Scalar(0,0,255));
+            }
+            all_circles.push_back(temp_circles);
+        }
+    }
+    
+    //根据各路标的圆心数据，确定最终参考路标
+    vector<Landmark> landmarks;
+    
+    for(int i = 0; i < all_circles.size(); i++){
+        vector<Vec3f> circles = all_circles[i];
+        if (!circles.empty()) {
+            
+            //确定定位三点
+            Vec3f LeftTop, RightTop, LeftBottom;
+            for (int j = 0; j < circles.size(); j++) {
+                int num = 0;
+                //筛选三点
+                for (int k = 0; k < circles.size(); k++) {
+                    if(j != k){
+                        float distance = sqrt(pow(circles[j][0] - circles[k][0], 2) + pow(circles[j][1] - circles[k][1], 2));
+                        if (distance <= maxSideLength && distance >= minSideLength) {
+                            num++;
+                            if (num == 1) {
+                                RightTop = circles[k];
+                            }
+                            if (num == 2) {
+                                LeftBottom = circles[k];
+                                break;
+                            }
+                        }
+                    }
+                }
+                
+                //确认左下角、右上角定位点
+                if (num == 2) {
+                    LeftTop = circles[j];
+                    bool flag = true;
+                    if (LeftTop[1] <= RightTop[1] && LeftTop[1] <= LeftBottom[1]) { //上0<=angle<90逆时针旋转
+                        if (LeftBottom[0] > RightTop[0]) {
+                            flag = false;
+                        }
+                    }
+                    else if (LeftTop[0] >= RightTop[0] && LeftTop[0] >= LeftBottom[0]) {//右90<=angle<180
+                        if (RightTop[1] < LeftBottom[1]) {
+                            flag = false;
+                        }
+                    }
+                    else if (LeftTop[1] >= RightTop[1] && LeftTop[1] >= LeftBottom[1]) {//下180<=angle<270
+                        if (RightTop[0] > LeftBottom[0]) {
+                            flag = false;
+                        }
+                    }
+                    else if (LeftTop[0] <= RightTop[0] && LeftTop[0] <= LeftBottom[0]) {//左270<=angle<360
+                        if (RightTop[1] > LeftBottom[1]) {
+                            flag = false;
+                        }
+                    }
+                    else {
+                        cout << "旋转角度检测异常" << endl;
+                        break;
+                    }
+                    if (!flag) {
+                        Vec3f temp = RightTop;
+                        RightTop = LeftBottom;
+                        LeftBottom = temp;
+                    }
+                    
+                    Landmark tempLandmark;
+                    tempLandmark.setLeftTop(LeftTop);
+                    tempLandmark.setRightTop(RightTop);
+                    tempLandmark.setLeftBottom(LeftBottom);
+                    tempLandmark.setCircles(circles);
+                    landmarks.push_back(tempLandmark);
+                    break;
+                }
+            }
+        }
+    }
+    
+    /*
     //将各堆矩阵整合为预选ROI
     vector<Rect> oriROIs;
     if (rectStacks.size() > 0) {
@@ -215,6 +307,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             }
         }
     }
+    */
     
     vector<LocalizeData> localizeDatas;
     if(landmarks.size() > 0){
@@ -371,6 +464,3 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
         return null_data;
     }
 }
-
-
-
