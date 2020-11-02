@@ -11,6 +11,7 @@ private:
     float uwb_y;
     float final_x;
     float final_y;
+    float d_theta;
 public:
     int getLandmarkId();
     void setLandmarkId(int id);
@@ -28,6 +29,8 @@ public:
     void setFinalX(float final_x);
     float getFinalY();
     void setFinalY(float final_y);
+    float getDTheta();
+    void setDTheta(float d_theta);
 };
 
 #endif /* LocalizeData_h */

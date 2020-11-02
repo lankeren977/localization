@@ -19,6 +19,7 @@ int minSideLength; //图像中路标最小边长（像素）
 float realSideLength; //实际路标边长
 int dim; //路标维度
 double e; //圆心确认误差范围
+float past_theta = 0;
 
 double getParam(String key){
     map<string,double>::iterator iter;
@@ -456,6 +457,8 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
         final_data.setVisualTheta(v_theta);
         final_data.setVisualX(v_x);
         final_data.setVisualY(v_y);
+        final_data.setDTheta(v_theta - past_theta);
+        past_theta = v_theta;
         return final_data;
     }else{
         cout << "未检测到路标" << endl;

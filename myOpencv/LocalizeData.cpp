@@ -63,3 +63,9 @@ void LocalizeData::setFinalY(float final_y){
     this->final_y = final_y;
 }
 
+float LocalizeData::getDTheta(){
+    return this->d_theta;
+}
+void LocalizeData::setDTheta(float d_theta){
+    this->d_theta = d_theta;
+}

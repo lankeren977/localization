@@ -60,9 +60,6 @@
 		7BADE7B6250E0154003D2B7B /* loadConfig.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B2250B1916003D2B7B /* loadConfig.cpp */; };
 		7BADE7BA250E23FD003D2B7B /* visualLocalize.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B8250E23FD003D2B7B /* visualLocalize.cpp */; };
 		7BADE7BC250E24DE003D2B7B /* LocalizeData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7BB250E24DE003D2B7B /* LocalizeData.cpp */; };
-		7BADE7BE250E3326003D2B7B /* loadConfig.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B3250B1916003D2B7B /* loadConfig.h */; };
-		7BADE7BF250E3326003D2B7B /* visualLocalize.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7B9250E23FD003D2B7B /* visualLocalize.h */; };
-		7BADE7C0250E3326003D2B7B /* LocalizeData.h in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7BD250E2FFC003D2B7B /* LocalizeData.h */; };
 		7BADE7C32510411D003D2B7B /* Landmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7BADE7C12510411D003D2B7B /* Landmark.cpp */; };
 /* End PBXBuildFile section */
 
@@ -338,9 +335,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7BADE7BE250E3326003D2B7B /* loadConfig.h in Sources */,
-				7BADE7BF250E3326003D2B7B /* visualLocalize.h in Sources */,
-				7BADE7C0250E3326003D2B7B /* LocalizeData.h in Sources */,
 				7BADE7BA250E23FD003D2B7B /* visualLocalize.cpp in Sources */,
 				7BADE7B6250E0154003D2B7B /* loadConfig.cpp in Sources */,
 				7BADE7BC250E24DE003D2B7B /* LocalizeData.cpp in Sources */,
