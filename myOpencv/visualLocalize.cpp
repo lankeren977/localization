@@ -8,14 +8,6 @@ int targetRectMin; //目标外接矩阵最小边界
 int targetRectMax; //目标外接矩阵最大边界
 int rectDistanceMin; //外接矩阵间最小距离
 int rectDistanceMax; //外接矩阵间最大距离
-double houghDp; //霍夫曼圆参数1
-double houghMinDist; //霍夫曼圆参数2
-double houghParam1; //霍夫曼圆参数3
-double houghParam2; //霍夫曼圆参数4
-int houghMinRadius; //霍夫曼圆参数5
-int houghMaxRadius; //霍夫曼圆参数6
-int maxSideLength; //图像中路标最大边长（像素）
-int minSideLength; //图像中路标最小边长（像素）
 float realSideLength; //实际路标边长
 int dim; //路标维度
 double e; //圆心确认误差范围
@@ -39,14 +31,6 @@ void loadVisualParams(){
     targetRectMax = getParam("targetRectMax");
     rectDistanceMin = getParam("rectDistanceMin");
     rectDistanceMax = getParam("rectDistanceMax");
-    houghDp = getParam("houghDp");
-    houghMinDist = getParam("houghMinDist");
-    houghParam1 = getParam("houghParam1");
-    houghParam2 = getParam("houghParam2");
-    houghMinRadius = getParam("houghMinRadius");
-    houghMaxRadius = getParam("houghMaxRadius");
-    maxSideLength = getParam("maxSideLength");
-    minSideLength = getParam("minSideLength");
     realSideLength = getParam("realSideLength");
     dim = getParam("dim");
     e = getParam("e");
@@ -85,8 +69,8 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     for (int i = 0; i < contours.size(); i++){
         boundRect[i] = boundingRect(Mat(contours[i]));
         if (boundRect[i].width < targetRectMax && boundRect[i].width > targetRectMin && boundRect[i].height < targetRectMax && boundRect[i].height > targetRectMin) { //圆形外界矩阵长宽限制一致
-            targetRects.push_back(boundRect[i]);
             rectangle(srcImage, Point(boundRect[i].x,boundRect[i].y), Point(boundRect[i].x+boundRect[i].width,boundRect[i].y+boundRect[i].height),Scalar(0,255,0));
+            targetRects.push_back(boundRect[i]);
         }
     }
 
@@ -122,7 +106,6 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 float c_r = (tempRectStacks[j].width + tempRectStacks[j].height) / 2;
                 Vec3f circle = Vec3f(c_x,c_y,c_r);
                 temp_circles.push_back(circle);
-                cv::circle(srcImage, Point(c_x,c_y), 2, Scalar(0,0,255));
             }
             all_circles.push_back(temp_circles);
         }
@@ -130,185 +113,81 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     
     //根据各路标的圆心数据，确定最终参考路标
     vector<Landmark> landmarks;
-    
     for(int i = 0; i < all_circles.size(); i++){
         vector<Vec3f> circles = all_circles[i];
         if (!circles.empty()) {
-            
-            //确定定位三点
+            //最长边确定左下和右上顶点
             Vec3f LeftTop, RightTop, LeftBottom;
+            int max_dis,rt_i,lb_i;
+            max_dis = rt_i = lb_i = 0;
             for (int j = 0; j < circles.size(); j++) {
-                int num = 0;
-                //筛选三点
                 for (int k = 0; k < circles.size(); k++) {
-                    if(j != k){
-                        float distance = sqrt(pow(circles[j][0] - circles[k][0], 2) + pow(circles[j][1] - circles[k][1], 2));
-                        if (distance <= maxSideLength && distance >= minSideLength) {
-                            num++;
-                            if (num == 1) {
-                                RightTop = circles[k];
-                            }
-                            if (num == 2) {
-                                LeftBottom = circles[k];
-                                break;
-                            }
-                        }
+                    float distance = sqrt(pow(circles[j][0] - circles[k][0], 2) + pow(circles[j][1] - circles[k][1], 2));
+                    if(distance > max_dis){
+                        max_dis = distance;
+                        RightTop = circles[j];
+                        LeftBottom = circles[k];
+                        rt_i = j;
+                        lb_i = k;
                     }
                 }
-                
-                //确认左下角、右上角定位点
-                if (num == 2) {
-                    LeftTop = circles[j];
-                    bool flag = true;
-                    if (LeftTop[1] <= RightTop[1] && LeftTop[1] <= LeftBottom[1]) { //上0<=angle<90逆时针旋转
-                        if (LeftBottom[0] > RightTop[0]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[0] >= RightTop[0] && LeftTop[0] >= LeftBottom[0]) {//右90<=angle<180
-                        if (RightTop[1] < LeftBottom[1]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[1] >= RightTop[1] && LeftTop[1] >= LeftBottom[1]) {//下180<=angle<270
-                        if (RightTop[0] > LeftBottom[0]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[0] <= RightTop[0] && LeftTop[0] <= LeftBottom[0]) {//左270<=angle<360
-                        if (RightTop[1] > LeftBottom[1]) {
-                            flag = false;
-                        }
-                    }
-                    else {
-                        cout << "旋转角度检测异常" << endl;
+            }
+            //垂直确定左上顶点
+            for (int j = 0; j < circles.size(); j++) {
+                if(j != rt_i && j != lb_i){
+                    float theta = atan2(RightTop[0] - circles[j][0], RightTop[1] - circles[j][1]) - atan2(LeftBottom[0] - circles[j][0], LeftBottom[1] - circles[j][1]);
+                    theta = theta * 180.0 / CV_PI;
+                    theta = (theta < 0) ? (theta + 360.0) : theta;
+                    if(fabs(theta - 90) < 10 || fabs(theta - 270) < 10){
+                        LeftTop = circles[j];
                         break;
                     }
-                    if (!flag) {
-                        Vec3f temp = RightTop;
-                        RightTop = LeftBottom;
-                        LeftBottom = temp;
-                    }
-                    
-                    Landmark tempLandmark;
-                    tempLandmark.setLeftTop(LeftTop);
-                    tempLandmark.setRightTop(RightTop);
-                    tempLandmark.setLeftBottom(LeftBottom);
-                    tempLandmark.setCircles(circles);
-                    landmarks.push_back(tempLandmark);
-                    break;
                 }
             }
-        }
-    }
-    
-    /*
-    //将各堆矩阵整合为预选ROI
-    vector<Rect> oriROIs;
-    if (rectStacks.size() > 0) {
-        for (int i = 0; i < rectStacks.size(); i++) {
-            vector<Rect> rects = rectStacks[i];
-            int minX = 2000, minY = 2000; //考虑到像素为1980x1080
-            int maxX = 0, maxY = 0;
-            for (int j = 0; j < rects.size(); j++) {
-                minX = (rects[j].x < minX) ? rects[j].x : minX;
-                minY = (rects[j].y < minY) ? rects[j].y : minY;
-                maxX = (rects[j].x > maxX) ? rects[j].x : maxX;
-                maxY = (rects[j].y > maxY) ? rects[j].y : maxY;
+            //调整左上和右上顶点
+            bool flag = true;
+            if (LeftTop[1] <= RightTop[1] && LeftTop[1] <= LeftBottom[1]) { //上0<=angle<90逆时针旋转
+                if (LeftBottom[0] > RightTop[0]) {
+                    flag = false;
+                }
             }
-            //避免遗漏尝试扩大边界5像素
-            minX = (minX >= 20) ? minX-20 : minX;
-            minY = (minX >= 20) ? minY-20 : minY;
-            maxX = maxX - minX + 40;
-            maxY = maxY - minY + 40;
-            Rect newRect = Rect(minX, minY, maxX, maxY);
-            oriROIs.push_back(newRect);
-        }
-    }
-    //在预选ROI中进行霍夫曼圆检测，确定最终参考路标
-    vector<Landmark> landmarks;
-    
-    for(int i = 0; i < oriROIs.size(); i++){
-        Mat roiImage = grayImage(oriROIs[i]);
-        rectangle(srcImage, Point(oriROIs[i].x,oriROIs[i].y), Point(oriROIs[i].x+oriROIs[i].width,oriROIs[i].y+oriROIs[i].height),Scalar(255,0,0));
-        vector<Vec3f> circles;
-        HoughCircles(roiImage, circles, HOUGH_GRADIENT, houghDp, houghMinDist, houghParam1, houghParam2, houghMinRadius, houghMaxRadius);
-        
-        if (!circles.empty() && circles.size() > 3) {
-            
-            //还原圆在原图的像素坐标
-            for (int j = 0; j < circles.size(); j++) {
-                circles[j][0] += oriROIs[i].x;
-                circles[j][1] += oriROIs[i].y;
+            else if (LeftTop[0] >= RightTop[0] && LeftTop[0] >= LeftBottom[0]) {//右90<=angle<180
+                if (RightTop[1] < LeftBottom[1]) {
+                    flag = false;
+                }
+            }
+            else if (LeftTop[1] >= RightTop[1] && LeftTop[1] >= LeftBottom[1]) {//下180<=angle<270
+                if (RightTop[0] > LeftBottom[0]) {
+                    flag = false;
+                }
+            }
+            else if (LeftTop[0] <= RightTop[0] && LeftTop[0] <= LeftBottom[0]) {//左270<=angle<360
+                if (RightTop[1] > LeftBottom[1]) {
+                    flag = false;
+                }
+            }
+            else {
+                cout << "旋转角度检测异常" << endl;
+                break;
+            }
+            if (!flag) {
+                Vec3f temp = RightTop;
+                RightTop = LeftBottom;
+                LeftBottom = temp;
             }
             
-            //确定定位三点
-            Vec3f LeftTop, RightTop, LeftBottom;
-            for (int j = 0; j < circles.size(); j++) {
-                int num = 0;
-                //筛选三点
-                for (int k = 0; k < circles.size(); k++) {
-                    if(j != k){
-                        float distance = sqrt(pow(circles[j][0] - circles[k][0], 2) + pow(circles[j][1] - circles[k][1], 2));
-                        if (distance <= maxSideLength && distance >= minSideLength) {
-                            num++;
-                            if (num == 1) {
-                                RightTop = circles[k];
-                            }
-                            if (num == 2) {
-                                LeftBottom = circles[k];
-                                break;
-                            }
-                        }
-                    }
-                }
-                
-                //确认左下角、右上角定位点
-                if (num == 2) {
-                    LeftTop = circles[j];
-                    bool flag = true;
-                    if (LeftTop[1] <= RightTop[1] && LeftTop[1] <= LeftBottom[1]) { //上0<=angle<90逆时针旋转
-                        if (LeftBottom[0] > RightTop[0]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[0] >= RightTop[0] && LeftTop[0] >= LeftBottom[0]) {//右90<=angle<180
-                        if (RightTop[1] < LeftBottom[1]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[1] >= RightTop[1] && LeftTop[1] >= LeftBottom[1]) {//下180<=angle<270
-                        if (RightTop[0] > LeftBottom[0]) {
-                            flag = false;
-                        }
-                    }
-                    else if (LeftTop[0] <= RightTop[0] && LeftTop[0] <= LeftBottom[0]) {//左270<=angle<360
-                        if (RightTop[1] > LeftBottom[1]) {
-                            flag = false;
-                        }
-                    }
-                    else {
-                        cout << "旋转角度检测异常" << endl;
-                        break;
-                    }
-                    if (!flag) {
-                        Vec3f temp = RightTop;
-                        RightTop = LeftBottom;
-                        LeftBottom = temp;
-                    }
-                    
-                    Landmark tempLandmark;
-                    tempLandmark.setLeftTop(LeftTop);
-                    tempLandmark.setRightTop(RightTop);
-                    tempLandmark.setLeftBottom(LeftBottom);
-                    tempLandmark.setCircles(circles);
-                    landmarks.push_back(tempLandmark);
-                    break;
-                }
-            }
+            cv::circle(srcImage, Point(LeftTop[0],LeftTop[1]), 2, Scalar(255,0,0),2);
+            cv::circle(srcImage, Point(RightTop[0],RightTop[1]), 2, Scalar(255,0,0),2);
+            cv::circle(srcImage, Point(LeftBottom[0],LeftBottom[1]), 2, Scalar(255,0,0),2);
+            
+            Landmark tempLandmark;
+            tempLandmark.setLeftTop(LeftTop);
+            tempLandmark.setRightTop(RightTop);
+            tempLandmark.setLeftBottom(LeftBottom);
+            tempLandmark.setCircles(circles);
+            landmarks.push_back(tempLandmark);
         }
     }
-    */
     
     vector<LocalizeData> localizeDatas;
     if(landmarks.size() > 0){
