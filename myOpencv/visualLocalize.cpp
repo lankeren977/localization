@@ -12,6 +12,7 @@ float realSideLength; //实际路标边长
 int dim; //路标维度
 double e; //圆心确认误差范围
 float past_theta = 0;
+LocalizeData preVisualData; //上一次正常帧的数据
 
 double getParam(String key){
     map<string,double>::iterator iter;
@@ -250,7 +251,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 theta_p += 2 * CV_PI;
             theta_p = theta_p * 180.0 / CV_PI;
             //全部改为顺时针方向,正值表达
-            theta_p = (theta_p < 0) ? (theta_p + 360.0) : theta_p;
+            theta_p = (theta_p < 0) ? ( -theta_p ) : (360.0 - theta_p);
             
             /* 获取id */
             int size = dim * dim - 4;
@@ -338,10 +339,12 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
         final_data.setVisualY(v_y);
         final_data.setDTheta(v_theta - past_theta);
         past_theta = v_theta;
+        preVisualData = final_data;
         return final_data;
     }else{
         cout << "未检测到路标" << endl;
         LocalizeData null_data;
+        null_data = preVisualData;
         null_data.setLandmarkId(-1);
         return null_data;
     }
