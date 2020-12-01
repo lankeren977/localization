@@ -57,7 +57,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
 
     //转化二值图像
     threshold(grayImage, binaryImage, binaryThreshold, binaryMaxValue, THRESH_BINARY);
-    
+   
     //寻找轮廓
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
@@ -201,19 +201,19 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             //矫正三点(图像中三点可能不垂直)
             if (LeftTop[0] == LeftBottom[0]) {
                 RightTop[1] = LeftTop[1];
-                cout << "定位点坐标矫正1" << endl;
+                //cout << "定位点坐标矫正1" << endl;
             }
             else if (LeftTop[1] == LeftBottom[1]) {
                 RightTop[0] = LeftTop[0];
-                cout << "定位点坐标矫正2" << endl;
+                //cout << "定位点坐标矫正2" << endl;
             }
             else if (LeftTop[0] == RightTop[0]) {
                 LeftBottom[1] = LeftTop[1];
-                cout << "定位点坐标矫正3" << endl;
+                //cout << "定位点坐标矫正3" << endl;
             }
             else if (LeftTop[1] == RightTop[1]) {
                 LeftBottom[0] = LeftTop[0];
-                cout << "定位点坐标矫正4" << endl;
+                //cout << "定位点坐标矫正4" << endl;
             }
             
             /* 获取坐标 */
