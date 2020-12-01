@@ -51,9 +51,14 @@ int main() {
         // 视觉定位数据获取
         LocalizeData visualData = getVisualLocalizeData(srcImage);
         endTime = clock();
-        cout << "[" << visualData.getVisualX() << ", " << visualData.getVisualY()<< "],"  << endl;
-//        cout << "单帧处理耗时：" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
-//        cout << visualData.getDTheta() << "," << visualData.getVisualTheta() << "---（" << visualData.getVisualX() << "," << visualData.getVisualY()<< "）"  << endl;
+        
+        //转换角度
+        float theta = visualData.getVisualTheta();
+        theta = (theta < 0) ? -theta : (360 - theta);
+        
+        cout << "单帧处理耗时：" << (double)(endTime - startTime) / CLOCKS_PER_SEC << "s" << endl;
+        cout << visualData.getLandmarkId() << "," << theta << "---[" << visualData.getVisualX() << "," << visualData.getVisualY()<< "]"  << endl;
+        
         namedWindow("show",WINDOW_NORMAL);
         imshow("show",srcImage);
         waitKey(20);

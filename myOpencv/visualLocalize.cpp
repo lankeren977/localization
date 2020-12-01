@@ -12,6 +12,7 @@ float realSideLength; //实际路标边长
 int dim; //路标维度
 double e; //圆心确认误差范围
 float past_theta = 0;
+LocalizeData preVisualData; //上一次正常帧的数据
 
 double getParam(String key){
     map<string,double>::iterator iter;
@@ -167,7 +168,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 }
             }
             else {
-                cout << "旋转角度检测异常" << endl;
+                cout << "--------------旋转角度检测异常" << endl;
                 break;
             }
             if (!flag) {
@@ -192,11 +193,11 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     vector<LocalizeData> localizeDatas;
     if(landmarks.size() > 0){
         
-        for(int i = 0; i < landmarks.size(); i++){
+        //for(int i = 0; i < landmarks.size(); i++){
             
-            Vec3f LeftTop = landmarks[i].getLeftTop();
-            Vec3f RightTop = landmarks[i].getRightTop();
-            Vec3f LeftBottom = landmarks[i].getLeftBottom();
+            Vec3f LeftTop = landmarks[0].getLeftTop();
+            Vec3f RightTop = landmarks[0].getRightTop();
+            Vec3f LeftBottom = landmarks[0].getLeftBottom();
             
             //矫正三点(图像中三点可能不垂直)
             if (LeftTop[0] == LeftBottom[0]) {
@@ -250,13 +251,13 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 theta_p += 2 * CV_PI;
             theta_p = theta_p * 180.0 / CV_PI;
             //全部改为顺时针方向,正值表达
-            theta_p = (theta_p < 0) ? (theta_p + 360.0) : theta_p;
+            theta_p = (theta_p < 0) ? ( 360.0 + theta_p ) : (theta_p);
             
             /* 获取id */
             int size = dim * dim - 4;
             int bits[size];
             //放射变换后定位点对应的新坐标，theta旋转角度为逆时针
-            vector<Vec3f> circles = landmarks[i].getCircles();
+            vector<Vec3f> circles = landmarks[0].getCircles();
             for (int j = 0; j < circles.size(); j++) {
                 circles[j] = getPointAffinedPos(circles[j], cameraCenter, theta_p);
             }
@@ -290,7 +291,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             }
             //判断二进制为1的数目和圆圈数目是否相等
             if (circlesNum != bitNum) {
-                cout << "ID识别异常" << endl;
+                cout << "--------------ID识别异常" << endl;
             }
             //根据位值计算序号
             for (int q = 0; q < dim * dim - 4; q++) {
@@ -305,44 +306,43 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             data.setVisualX(cameraRealX);
             data.setVisualY(cameraRealY);
             localizeDatas.push_back(data);
-        }
-    }else{
-        cout << "未检测到定位点" << endl;
+        //}
     }
     
-    //平均各路标数据
+    //选取一个路标z为参考
     if(localizeDatas.size() > 0){
         float v_x = 0, v_y = 0, v_theta = 0;
-        int num = 0;
-        for(int i = 0; i < localizeDatas.size(); i++){
+        //int num = 0;
+        //for(int i = 0; i < localizeDatas.size(); i++){
             map<int,double*>::iterator iter;
-            iter = globalLandmarks.find(localizeDatas[i].getLandmarkId());
+            iter = globalLandmarks.find(localizeDatas[0].getLandmarkId());
             if(iter != globalLandmarks.end()){
-                v_x += iter->second[0] + localizeDatas[i].getVisualX();
-                v_y += iter->second[1] + localizeDatas[i].getVisualY();
-                v_theta += localizeDatas[i].getVisualTheta();
-                num++;
+                v_x += iter->second[0] + localizeDatas[0].getVisualX();
+                v_y += iter->second[1] + localizeDatas[0].getVisualY();
+                v_theta += localizeDatas[0].getVisualTheta();
+                //num++;
+                LocalizeData final_data;
+                final_data.setLandmarkId(localizeDatas[0].getLandmarkId());
+                final_data.setVisualTheta(v_theta);
+                final_data.setVisualX(v_x);
+                final_data.setVisualY(v_y);
+                final_data.setDTheta(v_theta - past_theta);
+                
+                //保存上一帧
+                past_theta = v_theta;
+                preVisualData.setVisualTheta(final_data.getVisualTheta());
+                preVisualData.setVisualX(final_data.getVisualX());
+                preVisualData.setVisualY(final_data.getVisualY());
+                return final_data;
             }else{
-                cout << "id:" << localizeDatas[i].getLandmarkId() << " 配置异常" <<endl;
+                //cout << "--------------id:" << localizeDatas[0].getLandmarkId() << " 配置异常" <<endl;
+                preVisualData.setLandmarkId(0);
+                return preVisualData;
             }
-        }
-        if(num!=0){
-            v_x /= num;
-            v_y /= num;
-            v_theta /= num;
-        }
-        LocalizeData final_data;
-        final_data.setLandmarkId(1);
-        final_data.setVisualTheta(v_theta);
-        final_data.setVisualX(v_x);
-        final_data.setVisualY(v_y);
-        final_data.setDTheta(v_theta - past_theta);
-        past_theta = v_theta;
-        return final_data;
+        //}
     }else{
-        cout << "未检测到路标" << endl;
-        LocalizeData null_data;
-        null_data.setLandmarkId(-1);
-        return null_data;
+        //cout << "--------------未检测到路标" << endl;
+        preVisualData.setLandmarkId(-1);
+        return preVisualData;
     }
 }
