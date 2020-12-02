@@ -11,6 +11,7 @@ int rectDistanceMax; //外接矩阵间最大距离
 float realSideLength; //实际路标边长
 int dim; //路标维度
 double e; //圆心确认误差范围
+float MIN_MAX_DIS;//最长边最小值限定
 float past_theta = 0;
 LocalizeData preVisualData; //上一次正常帧的数据
 
@@ -35,6 +36,7 @@ void loadVisualParams(){
     realSideLength = getParam("realSideLength");
     dim = getParam("dim");
     e = getParam("e");
+    MIN_MAX_DIS = getParam("MIN_MAX_DIS");
 }
 
 Vec3f getPointAffinedPos(Vec3f& src, const Point center, double angle)
@@ -124,7 +126,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             for (int j = 0; j < circles.size(); j++) {
                 for (int k = 0; k < circles.size(); k++) {
                     float distance = sqrt(pow(circles[j][0] - circles[k][0], 2) + pow(circles[j][1] - circles[k][1], 2));
-                    if(distance > max_dis){
+                    if(distance > max_dis && distance > MIN_MAX_DIS){
                         max_dis = distance;
                         RightTop = circles[j];
                         LeftBottom = circles[k];
@@ -193,11 +195,11 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
     vector<LocalizeData> localizeDatas;
     if(landmarks.size() > 0){
         
-        //for(int i = 0; i < landmarks.size(); i++){
+        for(int i = 0; i < landmarks.size(); i++){
             
-            Vec3f LeftTop = landmarks[0].getLeftTop();
-            Vec3f RightTop = landmarks[0].getRightTop();
-            Vec3f LeftBottom = landmarks[0].getLeftBottom();
+            Vec3f LeftTop = landmarks[i].getLeftTop();
+            Vec3f RightTop = landmarks[i].getRightTop();
+            Vec3f LeftBottom = landmarks[i].getLeftBottom();
             
             //矫正三点(图像中三点可能不垂直)
             if (LeftTop[0] == LeftBottom[0]) {
@@ -257,7 +259,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             int size = dim * dim - 4;
             int bits[size];
             //放射变换后定位点对应的新坐标，theta旋转角度为逆时针
-            vector<Vec3f> circles = landmarks[0].getCircles();
+            vector<Vec3f> circles = landmarks[i].getCircles();
             for (int j = 0; j < circles.size(); j++) {
                 circles[j] = getPointAffinedPos(circles[j], cameraCenter, theta_p);
             }
@@ -306,23 +308,23 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
             data.setVisualX(cameraRealX);
             data.setVisualY(cameraRealY);
             localizeDatas.push_back(data);
-        //}
+        }
     }
     
-    //选取一个路标z为参考
+    //选取一个路标作为参考
     if(localizeDatas.size() > 0){
-        float v_x = 0, v_y = 0, v_theta = 0;
-        //int num = 0;
-        //for(int i = 0; i < localizeDatas.size(); i++){
+        
+        LocalizeData final_data;
+        
+        for(int i = 0; i < localizeDatas.size(); i++){
             map<int,double*>::iterator iter;
             iter = globalLandmarks.find(localizeDatas[0].getLandmarkId());
             if(iter != globalLandmarks.end()){
-                v_x += iter->second[0] + localizeDatas[0].getVisualX();
-                v_y += iter->second[1] + localizeDatas[0].getVisualY();
-                v_theta += localizeDatas[0].getVisualTheta();
-                //num++;
-                LocalizeData final_data;
-                final_data.setLandmarkId(localizeDatas[0].getLandmarkId());
+                float v_x = iter->second[0] + localizeDatas[i].getVisualX();
+                float v_y = iter->second[1] + localizeDatas[i].getVisualY();
+                float v_theta = localizeDatas[i].getVisualTheta();
+                
+                final_data.setLandmarkId(localizeDatas[i].getLandmarkId());
                 final_data.setVisualTheta(v_theta);
                 final_data.setVisualX(v_x);
                 final_data.setVisualY(v_y);
@@ -333,13 +335,14 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
                 preVisualData.setVisualTheta(final_data.getVisualTheta());
                 preVisualData.setVisualX(final_data.getVisualX());
                 preVisualData.setVisualY(final_data.getVisualY());
-                return final_data;
-            }else{
-                //cout << "--------------id:" << localizeDatas[0].getLandmarkId() << " 配置异常" <<endl;
+                break;
+            }else if(i == localizeDatas.size()-1){
+                //cout << "--------------id:" << localizeDatas[i].getLandmarkId() << " 配置异常" <<endl;
                 preVisualData.setLandmarkId(0);
                 return preVisualData;
             }
-        //}
+        }
+        return final_data;
     }else{
         //cout << "--------------未检测到路标" << endl;
         preVisualData.setLandmarkId(-1);

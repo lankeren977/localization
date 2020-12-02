@@ -22,7 +22,7 @@ int main() {
 
     Mat srcImage;
 
-    VideoCapture cap(0);
+    VideoCapture cap(1);
     cap.set(3,1920);
     cap.set(4,1080);
     cap.set(5,30);
