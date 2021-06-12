@@ -24,8 +24,8 @@ int main() {
     Mat srcImage;
 
     VideoCapture cap(0);
-    cap.set(3,640);
-    cap.set(4,480);
+    cap.set(3,1920);
+    cap.set(4,1080);
     //cap.set(5,30);
     if(!cap.isOpened()){
         cout << "摄像头未成功打开" << endl;

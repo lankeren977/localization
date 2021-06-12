@@ -54,6 +54,7 @@ LocalizeData getVisualLocalizeData(Mat srcImage){
 
     //计算相机中心坐标
     Point cameraCenter(grayImage.cols / 2, grayImage.rows / 2);
+    cv::circle(srcImage, cameraCenter, 2, Scalar(255,0,0),2);
 
     //转化二值图像
     threshold(grayImage, binaryImage, binaryThreshold, binaryMaxValue, THRESH_BINARY);
